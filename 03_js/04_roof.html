@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+ <script>
+  var n = 1;
+  result = '<h1>';
+  while(n <= 5){
+    result += n + '&nbsp;';
+    n++;
+  }
+  result += '</h1>';
+  document.write(result);
+
+  var imgNo = 1;
+  var imgTag = '<div>';
+    while(imgNo <= 10){
+    imgTag += '<img src = "../../assets/image/animal' + imgNo +'.jpg" width="150px">&nbsp;'
+    imgNo++;
+    }
+    imgTag += '</div>';
+    document.write(imgTag);
+</script> 
+<script>
+//  var month = 1;
+//  var monthSelect = '<option>';
+//   for(month = 0; month < 12; month++){
+//     monthSelect += '<option value="" >'+month+'<>'
+//   }
+
+ var selectTag = '<select name"month">';
+  selectTag += '<option value="">선택</option>';
+  for(var month = 1; month <= 12; month++){
+    selectTag +='<option value="' + month +'">' + month + '월</option>';
+
+  }
+
+  selectTag += '</option>';
+  document.write(selectTag);
+ </script> 
+
+ <script>
+
+var imgTag = '<div>';
+    for(var row = 1; row <= 3; row++) {
+      imgTag += '<div>';
+      for(var col = 1; col <= 3; col++) {
+        imgTag += '<img src="../../assets/image/animal' + ((row - 1) * 3 + col) + '.jpg" width="100px">&nbsp;';
+      }
+      imgTag += '</div>';
+    }
+    imgTag += '</div>';
+ </script>
+
+ 
+
+</body>
+</html>

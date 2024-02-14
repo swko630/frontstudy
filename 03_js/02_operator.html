@@ -41,7 +41,7 @@
      
    5. 논리 연산자
      1) 논리 AND : &&
-     2) 논리 OR  : ||
+     2) 논리 OR  : || 
      3) 논리 NOT : !    
    
    6. 조건 연산자 (삼항 연산자)
@@ -85,20 +85,15 @@
   // 8시간까지는 시급
   // 8시간 초과 근무는 시급 * 1.5
   // 10시간 근무 시 일급 계산하기 
-  var e = a < 8 ? true : false;
-  var a = '10';
-  var i = 9860;
-  var b = a * i || i * 1.5 * a ;
-  console.log(b);
-
-  var hourlyWage = 9860;
-  var workingTime = 10;
-
-  var regularPay = hourlyWage * workingTime;
-  var extraPay = (workingTime <= 8) ? 0 : (workingTime - 8) * hourlyWage * 0.5;
-  console.log('일급은' + (regularPay + extraPay) + '원입니다')
+  var workingHour = '10';
+  var hourlyWage = 9680;
+  var overtimePay = workingHour >= 8 ? hourlyWage * (workingHour - 8) * 0.5 : 0;
+  var dailyPay = '<h1>오늘의 급여는 '+ ((hourlyWage * workingHour) + overtimePay)+ ' 원입니다.';
+  document.write(dailyPay);
 
 
+
+  
 </script>
 
 
