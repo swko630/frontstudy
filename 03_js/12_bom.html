@@ -121,11 +121,34 @@
     })
    </script>
 
+    <div>
+      <a style="cursor: pointer;" id="link3">링크3</a>
+    </div>
+
+     <script>
+      var myWindow = null;
+      document.getElementById('link3').addEventListener('click', function(){
+        if(myWindow === null || myWindow.closed){
+          var features = 'width=' + (screen.width / 2);
+          features += ',height=' + (screen.height / 2);
+          features += ',top=' + (screen.height / 4);
+          features += ',left=' + (screen.width / 4);
+
+          myWindow - window.open('https://www.gdu.co.kr/', '', features);
+        } else {
+          myWindow.focus();
+        }
+      })
+     </script> 
+     
+
+
     <!-- 값을 입력하면 그 값을 다른 창에 보여주는 코드 -->
    <div>
     <form>
       <input type="text" id="a">
       <button id="btn" type="button">전송</button>
+      <div>부모창에 입력한 값은 <span id="c"></span>입니다.</div>
     </form>
    </div>
 
