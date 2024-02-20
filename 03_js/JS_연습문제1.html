@@ -43,16 +43,19 @@
       </ul>
       태그를 div2에 넣으시오.
     */
-    document.getElementById('btn2').addEventListener('click', function(){
-     
-      var sites = [
+    document.getElementById('btn2').addEventListener('click', function() {
+     var sites = [
         { url: 'https://www.google.com/', file: 'logo_google.png' },
         { url: 'https://www.naver.com/', file: 'logo_naver.png' },
         { url: 'https://www.gdu.co.kr/', file: 'logo_goodee.png' }
       ];
       var result = '<ul>';
         for(var i = 0 ; i < sites.length; i++){
-          result += '<li>' + '<a href="' + sites[i].url + '">' + '<img src="../../assets/image/' + site[i].file + '" width="192px></a></li>';
+          result += '<li>'; 
+          result +='<a href="' + sites[i].url + '">' ;
+          result +='<img src="../../assets/image/' + sites[i].file + '" width="192px">';
+          result += '</a>';
+          result += '</li>';
         }
         result += '</ul>';
         document.getElementById('div2').innerHTML = result;
