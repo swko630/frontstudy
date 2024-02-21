@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="div5"></div>
+  <script>
+  function ex05(){
+    setInterval(function(){
+      var now = new Date();
+      var dday = new Date(2024,3,10); // 2024-04-10
+  
+      var remainMillis = dday.getTime() - now.getTime();
+      var remainSeconds = parseInt(remainMillis / 1000);
+  
+      var day = parseInt(remainSeconds / 60 / 60 / 24) 
+      var hour = parseInt(remainSeconds / 60 / 60 ) % 24;
+      var minute = parseInt(remainSeconds / 60 ) % 60;
+      var second = remainSeconds % 60 ;
+  
+      var msg = '이클립스(4월 10일)까지 D-DAY';
+      if(remainSeconds < 0){
+        msg += ' 가 지났습니다.';
+      } else{
+        if(day >= 1){
+          msg += '&nbsp;' + day + '일 ' + hour + '시간 ' + minute + '분 ' + second + '초 ' + '남았습니다.';
+        } else {
+          msg += '&nbsp;' + String(hour).padStart(2, '0') 
+                          + ':' 
+                          + String(minute).padStart(2, '0')
+                          + ':'
+                          + String(second).padStart(2, '0');
+        }
+      } 
+      document.getElementById('div5').innerHTML = msg;
+    
+    },10)
+  }
+   ex05();
+ </script>
+
+
+</body>
+</html>
