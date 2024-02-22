@@ -72,7 +72,7 @@
     xhr.addEventListener('readystatechange', function(){
       
           /* 1.readyState 속성 (요청 상태를 정수값으로 저장하는 속성)
-               1) 0 : 클라이언트 생성(open() 호출 이전), UNSENT ,
+               1) 0 : 클라이언트 생성(open() 호출 이전), UNSENT
                2) 1 : 요청 생성(open() 호출), OPENED
                3) 2 : 요청 전송(send() 호출), HEADERS_RECEIVED
                4) 3 : 응답 다운로드 중, LOADING
@@ -111,9 +111,228 @@
 
 </script>
 
+<hr>
 
+<div id="div2">
+  <div>
+    <input type="text" id="begin" placeholder="시작NO">
+    <input type="text" id="end" placeholder="종료NO">
+    <button type="button" id="btn2">요청2</button>
+    <table border="1">
+      <thead>
+        <tr><td>앨범썸네일</td><td>앨범아이디</td><td>아이디</td><td>앨범제목(클릭하면 앨범이미지 오픈)</td></tr>
+      </thead>
+      <tbody id="contents2"></tbody>
+    </table>
+  </div>
+</div>
 
+<script>
 
+  function ex02(){
+ 
+    var xhr = new XMLHttpRequest();
+
+    xhr.open('GET', 'https://jsonplaceholder.typicode.com/photos', true);
+    xhr.send();
+
+    xhr.addEventListener('readystatechange', function(){
+      if(xhr.readyState !== XMLHttpRequest.DONE){
+        return;
+      }
+      if(xhr.status !== 200){
+        console.log('응답 메세지', xhr.statusText);
+        return;
+      } 
+        
+      var resData = JSON.parse(xhr.responseText); 
+      var begin = document.getElementById('begin').value || 1;
+      var end = document.getElementById('end').value || begin;
+      
+      var result  = '';
+        for( var i = begin - 1; i < end; i++){
+          result += '<tr>';
+          result += '<td><img src="' + resData[i].thumbnailUrl + '" width="50px"></td>';
+          result += '<td>' + resData[i].albumId + '</td>';
+          result += '<td>' + resData[i].id + '</td>';
+          result += '<td><a href="' + resData[i].url + '"target="_blank">' + resData[i].title +'</a></td>';
+          result += '</tr>';
+        }
+          
+          document.getElementById('contents2').innerHTML = result;
+    })
+  }
+  document.getElementById('btn2').addEventListener('click', ex02);
+</script>
+
+<hr>
+
+<div id="div3">
+  <button type="button" id="btn3">요청3</button>
+  <div id="contents3"></div>
+</div>
+<script>
+ function ex03(){
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET','https://thetestrequest.com/authors/1.xml');
+    xhr.send();
+    xhr.onreadystatechange = function(){
+      if(xhr.readyState !== XMLHttpRequest.DONE)
+      return;
+      if(xhr.status !== 200)
+      return;
+    var resData = xhr.responseXML;
+    var result = '<div>';
+      result += '<div>id:' + [i].getElementsByTagName('id')[0].textContent + '</div>';
+      result += '<div>id_type:' + resData.getElementsByTagName('id')[0].getAttribute('type') + '</div>';
+      result += '<div>name:' + resData.getElementsByTagName('name')[0].textContent + '</div>';
+      result += '<div><img src="' + resData.getElementsByTagName('avatar')[0].textContent + '"></div>';
+      result += '<div>created-at:' + resData.getElementsByTagName('created-at')[0].textContent + '</div>';
+      result += '<div>updated-at:' + resData.getElementsByTagName('updated-at')[0].textContent + '</div>';
+      result += '</div>';
+      document.getElementById('contents3').innerHTML = result;
+      
+    }
+  }
+  document.getElementById('btn3').onclick = ex03;
+</script>
+
+<hr>
+<div><button type="button" id="btn4">요청4</button></div>
+<div id="div4">
+  <div id="contents4"></div>
+  <style>
+    #div4{
+      width: 1000px;
+    }
+    #contents4 {
+      width: 1000px;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    #contents4 > .author {
+      width: 300px;
+      height: 300px;
+      border: 1px solid, gray;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    #contents4 > .author:hover {
+      background-color: beige;
+    }
+    </style>
+</div>
+
+<script>
+  function ex04(){
+    var xhr = new XMLHttpRequest;
+    xhr.open('GET', 'https://thetestrequest.com/authors.xml');
+    xhr.send();
+    xhr.onreadystatechange = function(){
+      if(xhr.readyState !== XMLHttpRequest.DONE)
+      return;
+    if(xhr.status !== 200)
+    return;
+  var resData = xhr.responseXML;
+  var objects = resData.getElementsByTagName('object');
+  var result = '';
+  
+  for(var i = 0; i < resDatangth; i++) {
+    result += '<div class="author">';
+      result += '<div>id:' + objects[i].getElementsByTagName('id')[0].textContent + '</div>';
+      result += '<div>name:' + objects[i].getElementsByTagName('name')[0].textContent + '</div>';
+      result += '<div>email:' + objects[i].getElementsByTagName('email')[0].textContent + '</div>';
+      result += '<div>created-at:' + objects[i].getElementsByTagName('created-at')[0].textContent + '</div>';
+      result += '<div>updated-at:' + objects[i].getElementsByTagName('updated-at')[0].textContent + '</div>';
+      result += '<div><img src="' + objects[i].getElementsByTagName('avatar')[0].textContent + '" width="150px"></div>';
+      result += '</div>';
+       };
+      document.getElementById('contents4').innerHTML = result;
+  }
+    
+ }
+ document.getElementById('btn4').addEventListener('click', ex04);
+</script>
+
+<hr>
+
+<button id="btn5">공공데이터요청</button>
+<script>
+  
+  function ex05() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://apis.data.go.kr/B552061/AccidentDeath/getRestTrafficAccidentDeath?searchYear=2020&siDo=1100&guGun=1116&type=json&numOfRows=20&pageNo=1&serviceKey=Qf5QJxWLb78ICvg/UdZltZWddwFSwzpc0NJempIA5FBYDohJ+Cb/Z03TiCGNOCDKbFATg8HH/x9+L1/Ubn92+g==');
+    xhr.send();
+    xhr.onreadystatechange = function(){
+      if(xhr.readyState !== XMLHttpRequest.DONE)
+        return;
+      if(xhr.status !== 200)
+        return;
+      var resData = JSON.parse(xhr.responseText);
+      console.log(resData);
+    } 
+  }
+  document.getElementById('btn5').onclick = ex05;
+</script>
+
+<hr>
+
+<button id="btn6">기상청데이터요청</button>
+<script>
+
+  function ex06() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://apis.data.go.kr/1192000/select0230List/getselect0230List?pageNo=1&numOfRows=10&fsboNo=00100016261403&serviceKey=Qf5QJxWLb78ICvg/UdZltZWddwFSwzpc0NJempIA5FBYDohJ+Cb/Z03TiCGNOCDKbFATg8HH/x9+L1/Ubn92+g==');
+    xhr.send();
+    xhr.onreadystatechange = function(){
+     if(xhr.readyState !== XMLHttpRequest.DONE)
+     return;
+     if(xhr.status !== 200)
+     return;
+
+     var resData = xhr.responseXML;
+     console.log(resData);
+     
+    };
+  }
+  document.getElementById('btn6').onclick = ex06;
+</script>
+
+<hr>
+
+<button id="btn7">임상연구등록조회</button>
+
+<script>
+
+ function ex07(){
+  var xhr = new XMLHttpRequest;
+  xhr.open('GET' , 'http://apis.data.go.kr/1352159/crisstatdataview/studytypeview?resultType=json&srchYear=2020&serviceKey=Qf5QJxWLb78ICvg/UdZltZWddwFSwzpc0NJempIA5FBYDohJ+Cb/Z03TiCGNOCDKbFATg8HH/x9+L1/Ubn92+g==');
+  xhr.send();
+  xhr.onreadystatechange = function(){
+    if(xhr.readyState !== XMLHttpRequest.DONE)
+    return;
+    if(xhr.status !== 200)
+    return;
+
+    var resData = JSON.parse(xhr.responseText);
+    console.log(resData);
+  }
+ }
+
+ document.getElementById('btn7').addEventListener('click', ex07);
+</script>
+
+<hr>
+
+<button id="btn8">시설물보험정보</button>
+
+<script>
+
+  function ex08(){
+    var xhr = new XMLHttpRequest;
+    xhr.open('GET', 'apis.data.go.kr/1741000/ndms?page=1&perPage=10&resultType=json& ')
+  }
+</script>
 
 </body>
 </html>
