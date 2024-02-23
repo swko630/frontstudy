@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+  
+<div id="box" class="wrap">box</div>
+<script>
+  // 태그 인식 : 배열
+  var div = $('div');  // document.getElementsByTagName('div')
+  console.log(div);
+  
+  // 아이디 인식 : 객체
+  var box = $('#box');   // document.getElementById('box')
+  console.log(box);
+  
+  // 클래스 인식 : 배열
+  var wrap = $('.wrap'); // document.getElementsByClassName('wrap')
+  console.log(wrap);
+</script>
+
+<ul class="ott">
+  <li id="netflix"><a href="javascript:void(0)">넷플릭스</a></li>
+  <li id="disneyplus"><a href="javascript:void(0)">디즈니플러스</a></li>
+  <li id="tving"><a id="tving-link" href="javascript:void(0)">티빙</a></li>
+  <li id="wave"><a href="javascript:void(0)">웨이브</a></li>
+  <li id="coupangplay"><a href="javascript:void(0)">쿠팡플레이</a></li>
+</ul>
+<script>
+ 
+  // 1. 자식
+  console.log($('.ott > li'));
+  console.log($('.ott').find('li'));
+  console.log($('.ott').children('li'));
+  console.log($('.ott').children());
+  
+  // 2. 후손
+  console.log($('.ott a'));
+  console.log($('.ott').find('a'));
+  console.log($('.ott').children('li').children('a'));
+  console.log($('.ott').children().children());
+
+  // 3. 일반 형제
+  console.log($('#tving ~ li'));             // 일반 형제 (#tving 의 다음 형제들)
+  console.log($('#tving').nextAll('li'));    // 다음 형제 (#tving 의 다음 형제들)  
+  console.log($('#tving').prevAll('li'));    // 이전 형제 (#tving 의 이전 형제들)  
+  console.log($('#tving').siblings('li'));   // 모든 형제 (#tving 의 모든 형제들)  
+
+  // 4. 인접형제
+  console.log($('#tving + li'));        // 인접 형제 (#tving 의 다음 형제 하나)   
+  console.log($('#tving').next('li'));  // 다음 형제 (#tving 의 다음 형제 하나)   
+  console.log($('#tving').prev('li'));  // 이전 형제 (#tving 의 다음 형제 하나)   
+  
+  // 5. 부모와 조상
+  console.log($('#tving-link').parent('li'));  // 부모
+  console.log($('#tving-link').closest('li')); // 가장 가까운 부모
+  console.log($('#tving-link').parents());     // 부모 & 조상
+     
+
+</script>
+
+<form id="frm">
+  <div><input type="text"></div>
+  <div><input type="password"></div>
+  <div><input type="radio" name="a"><input type="radio" name="a"></div>
+  <div><input type="checkbox"><input type="checkbox"></div>
+  <div><select><option selected>A</option><option>B</option></select></div>
+</form>
+<script>
+
+  // type 속성
+  console.log($(':text'));
+  console.log($(':password'));
+  console.log($(':radio'));
+  console.log($(':checkbox'));
+
+  // 상태 지정
+  console.log($(':focus'));              // 포커스를 가진 요소
+  console.log($(':text:checked'));       // text 중 체크된 요소 
+  console.log($(':checked'));            // 체크된 요소
+  console.log($(':radio:checked'));      // radio 중 체크된 요소
+  console.log($(':checkbox:checked'));   // checkbox 중 체크된 요소
+  console.log($(':selected'));           // 선택된 요소 - select도 check로 인식, 모바일은 아닐수도 있음
+
+  // 상태 확인
+  console.log($(':text').is(':focus'));              // text가 포커스를 가지면 true 반환
+  console.log($(':radio').is(':checked'));           // radio가 체크되면 true 반환
+  console.log($('select > option').is(':selected')); // option이 선택되면 true 반환
+</script>
+
+<hr>
+
+<div id="div1">hello world</div>
+
+<script>
+ // 내부 텍스트 : text()
+ console.log($('#div1').text());
+ $('#div1').text('안녕하세요 반갑습니다.');
+
+</script>
+
+<div id="div2"><h1>hello world</h1></div>
+<script>
+  // 내부 요소 : html()
+  console.log($('#div2').html());
+  $('#div2').html('<em>안녕하세요 반갑습니다.</em>');
+</script>
+
+<div id="div3"><img src="../../assets/image/animal10.jpg" width="192px"></div>
+<script>
+  // 태그 속성(attribute)
+ console.log($('#div3').find('img').attr('src'));
+ $('#div3').find('img').attr('src','../../assets/image/flower1.jpg'); //이미지 바꾸기
+ $('#div3').find('img').removeAttr('src'); // 태그 속성 삭제
+</script>
+
+<div id="div4">
+  <input type="radio" id="man" class="blind" value="M" checked="checkbox">
+</div>
+
+<script>
+  // 문서 객체 속성(property)
+  var radio = $('#div4').find(':radio'); // 변수로 함수를 저장해서 사용해야 성능 향상
+  console.log(radio.prop('type'));
+  console.log(radio.prop('id'));
+  console.log(radio.prop('className'), radio.prop('class'));
+  console.log(radio.prop('value'),     radio.val());
+  console.log(radio.prop('checked'),   radio.is(':checked'));
+
+  radio.prop('type', 'checkbox');
+
+  radio.removeProp('type');  // builtin property는 삭제 금지한다.(사용자 설정 property만 삭제한다.)
+</script>
+
+<div id="div5">
+  <input type="text" value="hello world">
+</div>
+
+<script>
+  // value 속성 
+  console.log($('#div5').find(':text').val());
+  $('#div5').find(':text').val('안녕하세요 반갑습니다.');
+
+</script>
+
+<div id="div6" data-name="고길동" data-home-address="서울" data-zipCode="12345">고길동</div>
+
+<script>
+   // data-* 속성
+   console.log($('#div6').data('name'));
+   console.log($('#div6').data('home-address'), $('#div6').data('homeAddress'));
+   console.log($('#div6').data('zipCode'), $('#div6').data('zipcode'));  // 소문자로 변환되어 인식이 되지않는다. - Camelcase는 항상 조심
+   $('#div6').data('name', '홍길동');
+   $('#div6').data('mobile', '010-1111-2222');
+   console.log($('#div6').data('name'));
+   console.log($('#div6').data('mobile'));
+  
+</script>
+
+<div id="div7">hello world</div>
+
+<script>
+  // style 속성
+  $('#div7').css('fontSize', '32px');  // camel case 가능
+  $('#div7').css('font-weight', 900);  // 원래 이름 가능
+  $('#div7').css('text-align', 'center').css('line-height', '100px'); // 메소드 체이닝
+  $('#div7').css({ // 객체로 등록
+    width: '200px',
+    height: '100px',
+    border: '1px solid gray',
+    backgroundColor: 'yellow'
+  })
+</script>
+</body>
+</html>
